@@ -1,5 +1,6 @@
 package com.eric.base.controller;
 
+import com.eric.base.service.VoteUserService;
 import com.eric.base.core.JsonResult;
 import com.eric.base.core.token.TokenManager;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ApiController {
     @Resource
     private TokenManager tokenManager;
+    @Resource
+    private VoteUserService voteUserService;
 
     @GetMapping(value = "/createToken")
     public JsonResult createToken(String userName, HttpServletResponse response) {
@@ -32,5 +35,11 @@ public class ApiController {
     @GetMapping(value = "/api/validateToken")
     public JsonResult validateToken() {
         return new JsonResult().success();
+    }
+
+
+    @GetMapping(value = "/getVoteUser")
+    public JsonResult getVoteUser(Long id) {
+        return new JsonResult().success(voteUserService.getVoteUserById(id));
     }
 }
